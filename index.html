@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="UTME 2027 Computer Based Test Platform"
+  >
+
+  <title>UTME 2027 | CBT Platform</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="app">
+
+
+  <!-- =====================================================
+       HOME
+       ===================================================== -->
+
+  <section id="homePage" class="page active">
+
+    <header class="navbar">
+
+      <div class="brand">
+        UTME <span>2027</span>
+      </div>
+
+    </header>
+
+
+    <main class="hero">
+
+      <div class="hero-content">
+
+        <span class="badge">
+          UTME 2027
+        </span>
+
+        <h1>
+          Prepare.<br>
+          Practice.<br>
+          Perform.
+        </h1>
+
+        <p>
+          A professional computer-based test platform
+          designed to help candidates prepare for UTME.
+        </p>
+
+        <button
+          class="primary-btn"
+          onclick="showPage('registerPage')"
+        >
+          Start Practice
+        </button>
+
+      </div>
+
+    </main>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       REGISTRATION
+       ===================================================== -->
+
+  <section id="registerPage" class="page">
+
+    <div class="form-container">
+
+      <button
+        class="back-btn"
+        onclick="showPage('homePage')"
+      >
+        ← Back
+      </button>
+
+
+      <div class="form-card">
+
+        <span class="badge">
+          UTME 2027
+        </span>
+
+        <h2>
+          Candidate Registration
+        </h2>
+
+        <p>
+          Enter your details to begin your CBT session.
+        </p>
+
+
+        <form id="registrationForm">
+
+
+          <label>
+            Full Name
+
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Enter your full name"
+              required
+            >
+
+          </label>
+
+
+
+          <label>
+            Intended Course
+
+            <input
+              type="text"
+              id="course"
+              placeholder="e.g. Computer Science"
+              required
+            >
+
+          </label>
+
+
+
+          <label>
+            Phone Number
+
+            <input
+              type="tel"
+              id="phone"
+              placeholder="Enter your phone number"
+              required
+            >
+
+          </label>
+
+
+
+          <label>
+            Email Address
+
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email address"
+              required
+            >
+
+          </label>
+
+
+
+          <p
+            id="registerError"
+            class="error"
+          ></p>
+
+
+
+          <button
+            type="submit"
+            class="primary-btn full"
+          >
+            Continue
+          </button>
+
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       SUBJECT SELECTION
+       ===================================================== -->
+
+  <section id="subjectsPage" class="page">
+
+    <div class="form-container">
+
+      <div class="form-card">
+
+        <span class="badge">
+          STEP 2
+        </span>
+
+        <h2>
+          Select Subjects
+        </h2>
+
+        <p>
+          Select the subjects you want to practise.
+        </p>
+
+
+        <div
+          id="subjectOptions"
+          class="subject-options"
+        ></div>
+
+
+        <p
+          id="subjectError"
+          class="error"
+        ></p>
+
+
+        <button
+          class="primary-btn full"
+          onclick="continueToInstructions()"
+        >
+          Continue
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       INSTRUCTIONS
+       ===================================================== -->
+
+  <section id="instructionsPage" class="page">
+
+    <div class="form-container">
+
+      <div class="form-card">
+
+        <span class="badge">
+          STEP 3
+        </span>
+
+        <h2>
+          Examination Instructions
+        </h2>
+
+
+        <div class="instructions">
+
+          <div class="instruction">
+            <strong>01</strong>
+            <p>
+              Read each question carefully before selecting
+              an answer.
+            </p>
+          </div>
+
+
+          <div class="instruction">
+            <strong>02</strong>
+            <p>
+              You can move between questions using the
+              Previous and Next buttons.
+            </p>
+          </div>
+
+
+          <div class="instruction">
+            <strong>03</strong>
+            <p>
+              Your selected answers are saved during the
+              examination.
+            </p>
+          </div>
+
+
+          <div class="instruction">
+            <strong>04</strong>
+            <p>
+              The examination will automatically submit
+              when the timer reaches zero.
+            </p>
+          </div>
+
+
+          <div class="instruction">
+            <strong>05</strong>
+            <p>
+              Once submitted, your result will be displayed.
+            </p>
+          </div>
+
+        </div>
+
+
+        <button
+          class="primary-btn full"
+          onclick="startExam()"
+        >
+          Start Examination
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       EXAM
+       ===================================================== -->
+
+  <section id="examPage" class="page">
+
+    <div class="exam-layout">
+
+
+      <!-- EXAM HEADER -->
+
+      <header class="exam-header">
+
+        <div class="exam-title">
+          UTME 2027
+        </div>
+
+
+        <div
+          id="timer"
+          class="timer"
+        >
+          00:00
+        </div>
+
+
+        <button
+          class="submit-btn"
+          onclick="submitExam(false)"
+        >
+          Submit Exam
+        </button>
+
+      </header>
+
+
+
+      <!-- EXAM BODY -->
+
+      <main class="exam-main">
+
+
+        <!-- QUESTION -->
+
+        <div class="question-panel">
+
+          <div class="question-top">
+
+            <span
+              id="questionNumber"
+            >
+              Question 1
+            </span>
+
+
+            <span
+              id="questionSubject"
+              class="question-subject"
+            >
+              Subject
+            </span>
+
+          </div>
+
+
+          <h2
+            id="questionText"
+            class="question-text"
+          >
+            Loading question...
+          </h2>
+
+
+
+          <!-- OPTIONS -->
+
+          <div class="options">
+
+
+            <button
+              class="option"
+              data-option="A"
+              onclick="selectAnswer('A')"
+            >
+
+              <span class="option-letter">
+                A
+              </span>
+
+              <span class="option-text">
+                Option A
+              </span>
+
+            </button>
+
+
+
+            <button
+              class="option"
+              data-option="B"
+              onclick="selectAnswer('B')"
+            >
+
+              <span class="option-letter">
+                B
+              </span>
+
+              <span class="option-text">
+                Option B
+              </span>
+
+            </button>
+
+
+
+            <button
+              class="option"
+              data-option="C"
+              onclick="selectAnswer('C')"
+            >
+
+              <span class="option-letter">
+                C
+              </span>
+
+              <span class="option-text">
+                Option C
+              </span>
+
+            </button>
+
+
+
+            <button
+              class="option"
+              data-option="D"
+              onclick="selectAnswer('D')"
+            >
+
+              <span class="option-letter">
+                D
+              </span>
+
+              <span class="option-text">
+                Option D
+              </span>
+
+            </button>
+
+
+          </div>
+
+
+
+          <!-- NAVIGATION -->
+
+          <div class="question-navigation">
+
+            <button
+              id="previousBtn"
+              class="nav-btn"
+              onclick="previousQuestion()"
+            >
+              ← Previous
+            </button>
+
+
+            <button
+              id="nextBtn"
+              class="nav-btn"
+              onclick="nextQuestion()"
+            >
+              Next →
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- QUESTION PALETTE -->
+
+        <aside class="palette-panel">
+
+          <h3>
+            Questions
+          </h3>
+
+          <p class="palette-info">
+            Click a number to jump to a question.
+          </p>
+
+
+          <div
+            id="questionPalette"
+            class="question-palette"
+          ></div>
+
+
+          <div class="palette-legend">
+
+            <div>
+              <span class="legend current"></span>
+              Current
+            </div>
+
+            <div>
+              <span class="legend answered"></span>
+              Answered
+            </div>
+
+          </div>
+
+        </aside>
+
+
+      </main>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =====================================================
+       RESULT
+       ===================================================== -->
+
+  <section id="resultPage" class="page">
+
+    <div class="result-container">
+
+      <div class="result-card">
+
+        <span class="badge">
+          EXAMINATION COMPLETE
+        </span>
+
+
+        <h1>
+          Your Result
+        </h1>
+
+
+        <div class="score-display">
+
+          <div
+            id="resultScore"
+            class="score"
+          >
+            0
+          </div>
+
+          <div class="score-label">
+            Correct Answers
+          </div>
+
+        </div>
+
+
+        <div class="result-stats">
+
+          <div class="result-stat">
+
+            <strong
+              id="resultPercentage"
+            >
+              0%
+            </strong>
+
+            <span>
+              Percentage
+            </span>
+
+          </div>
+
+
+          <div class="result-stat">
+
+            <strong
+              id="resultTotal"
+            >
+              0
+            </strong>
+
+            <span>
+              Total Questions
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="primary-btn full"
+          onclick="startAgain()"
+        >
+          Return Home
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
